@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous"> -->
+    <style>
+        .container {
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+        }
+
+        .inbox-User {
+            height: 100vh;
+            background: #eee;
+        }
+
+        .itemUser {
+            display: flex;
+            width: 17em;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 1em;
+        }
+
+        .itemUser:hover {
+            background: #cc33cc;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 3em;
+            height: 3em;
+            background: #cc33cc;
+            border-radius: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #eee;
+            font-weight: bolder;
+            margin: 0 1em;
+        }
+
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            margin: 0 1em;
+        }
+
+        .boxMessage {
+            border: 1px solid #eee;
+            height: 350px;
+            width: 500px;
+            overflow-y: auto;
+            padding: 1em;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            margin: 1em 0;
+        }
+
+        .boxMessage::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .boxMessage::-webkit-scrollbar-track {
+            background: #efefef
+        }
+
+        .boxMessage::-webkit-scrollbar-thumb {
+            background: #cc33cc
+        }
+
+        .fromUser,
+        .toUser {
+            position: relative !important;
+            border-radius: 8px;
+            width: 60%;
+            margin-bottom: 1em;
+            padding: 0 1em;
+        }
+
+        .fromUser {
+            float: right;
+            background: #cc33cc;
+            color: #fff;
+        }
+
+        .toUser {
+            float: left !important;
+            background: #efefef;
+            color: #000;
+        }
+
+        .date,
+        .dateToUser {
+            opacity: .7;
+            position: relative;
+            float: right;
+            font-size: small;
+        }
+
+        .date {
+            color: #fff;
+        }
+
+        .dateToUser {
+            color: #000;
+        }
+
+        .divForm {
+            display: flex;
+            align-content: space-between;
+            justify-content: space-evenly;
+            margin: 1em 0;
+            width: 33em;
+        }
+
+        .textBox {
+            width: 29em;
+            height: 3em;
+            overflow-y: auto;
+            border-radius: 10px;
+            background: #efefef;
+        }
+
+        .btnEnviar {
+            background: #CC33CB;
+            color: cornsilk;
+            border: 0px;
+            border-radius: 10px;
+            width: 9em;
+            height: 3.5em;
+            font-weight: 700;
+        }
+
+        /* .status {
+            width: 10px;
+            height: 10px;
+            background: #23e623;
+            border-radius: 20px;
+        } */
+    </style>
+
+</head>
+
+<body>
+
+
+    <div class="container">
+        <div class="inbox-User">
+            <div class="itemUser" data-id="11">
+                <div class="avatar">11</div>
+                <div>
+                    <h5 class="nameUser">Usuario 11</h5>
+                    <p class="status"></p>
+                    <div id="actions"></div>
+                </div>
+            </div>
+            <div class="itemUser" data-id="26">
+                <div class="avatar">26</div>
+                <div>
+                    <h5 class="nameUser">Usuario 26</h5>
+                    <p class="status"></p>
+                    <div id="actions"></div>
+                </div>
+            </div>
+            <div class="itemUser" data-id="10">
+                <div class="avatar">10</div>
+                <div>
+                    <h5 class="nameUser">Usuario 10</h5>
+                    <p class="status"></p>
+                    <div id="actions"></div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-container">
+            <label for="toUser">Para:</label>
+            <input id="toUser" type="number" autocomplete="off" autofocus disabled>
+            <label for="idUser">ID (de):</label>
+            <input id="idUser" type="number" autocomplete="off" disabled>
+            <div class="status-actions">
+                <div id="actions"></div>
+                <!-- <p class="status"></p> -->
+            </div>
+            <div>
+                <div id="boxMsg" class="boxMessage"></div>
+                <div class="divForm">
+                    <textarea id="textBox" class="textBox" placeholder="Escribe un mensaje"></textarea>
+                    <button id="btn" class="btnEnviar"> Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-analytics.js"></script>
+    <script src='ws.js'></script>
+    <script src="chat.js"></script>
+</body>
+
+</html>

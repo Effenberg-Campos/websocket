@@ -1,0 +1,30 @@
+<center>
+    <input id="user">
+    <button id="intro">Entrar</button>
+</center>
+
+<script>
+
+document.getElementById("intro").addEventListener("click", function(){
+
+    let users = [
+        {user:'Effenberg', id:11 },
+        {user:'Erick', id:26},
+        {user:'Samuel', id:10}
+    ]
+    
+    let entrar = document.getElementById("user").value;
+    
+    let result = users.find(el => el.user === entrar);
+
+    if(result){
+            sessionStorage.setItem("idUser", result.id)
+            window.location.href='index.html';
+    }else{
+            alert("No existe el usuario")
+    }
+
+});
+
+
+</script>
